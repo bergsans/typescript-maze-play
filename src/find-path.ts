@@ -5,7 +5,7 @@ export function findPath(
   maze: IMaze,
   startCoordinates: ICoords,
   endCoordinates: ICoords
-): ISuccessfullPath | boolean {
+): ISuccessfullPath | false {
   // let Q be a queue, label start_v as discovered, Q.enqueue(start_v)
   const queue: IPathNode[] = [{
     y: startCoordinates.y,
