@@ -1,4 +1,4 @@
-import { INeighbourWalls, IPossibleMoves, ICell } from './interfaces';
+import { INeighbourWalls, IPossibleMoves, IMaze, ISuccessfullPath } from './interfaces';
 import { WALLS, WALL_RELATIONS } from './constants';
 
 function getWallType(wallType: INeighbourWalls) {
@@ -9,18 +9,32 @@ function getWallType(wallType: INeighbourWalls) {
   );
   return finding?.representation;
 }
-export function prettyPrintMaze(maze: ICell[][]) {
+
+export function prettyPrintMaze(maze: IMaze, foundPath?: ISuccessfullPath): string {
   let isWallInDir:INeighbourWalls = {
     left: false,
     right: false,
     up: false,
     down: false
   };
-  let prettyFormattedMaze:string = '';
-  for(const row of maze) {
+  const prettyFormattedMaze:string[] = [];
+  for(const row of maze.cells) {
     for(const cell of row) {
-        if (cell.tile === 'FLOOR') {
-        prettyFormattedMaze += ' ';
+      if (cell.tile === ' ' || cell.tile === 'FLOOR') {
+        if(foundPath !== undefined) {
+          const {startCoordinates, endCoordinates} = foundPath;
+          if(startCoordinates.x === cell.x && startCoordinates.y === cell.y) {
+            prettyFormattedMaze.push('S');
+          } else if(endCoordinates.x === cell.x && endCoordinates.y === cell.y) {
+            prettyFormattedMaze.push('E');
+          } else if(foundPath.path.some((node) => node.x === cell.x && node.y === cell.y)) {
+            prettyFormattedMaze.push('.');
+          } else {
+            prettyFormattedMaze.push(' ');
+          }
+        } else {
+          prettyFormattedMaze.push(' ');
+        }
       } else {
         isWallInDir = {
           left: false,
@@ -33,19 +47,19 @@ export function prettyPrintMaze(maze: ICell[][]) {
           const deltaX:number = cell.x + WALL_RELATIONS[(possibility as keyof IPossibleMoves)].x;
           if (!(
             deltaY < 0 ||
-            deltaY >= maze.length ||
+            deltaY >= maze.cells.length ||
             deltaX < 0 ||
             deltaX >= row.length ||
-            maze[deltaY][deltaX].tile !== 'WALL')
+            maze.cells[deltaY][deltaX].tile !== 'WALL')
           ) {
             isWallInDir[(possibility as keyof IPossibleMoves)] = true;
           }
         }
-        prettyFormattedMaze += getWallType(isWallInDir);
+        prettyFormattedMaze.push(getWallType(isWallInDir));
       }
     }
-    prettyFormattedMaze += '\n';
+    prettyFormattedMaze.push('\n');
   }
-  console.log(prettyFormattedMaze);
+  return prettyFormattedMaze.join('');
 }
 

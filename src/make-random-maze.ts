@@ -1,4 +1,4 @@
-import { Status, IPossibleMoves, ISize, ICoords, ICell } from './interfaces';
+import { IMaze, Status, IPossibleMoves, ISize, ICoords, ICell } from './interfaces';
 import { POSSIBLE_MOVES, WALL_RELATIONS } from './constants';
 
 function isEven(x: number) {
@@ -59,7 +59,7 @@ function whichDirectionsArePossible(
   );
 }
 
-export function makeRandomMaze(w: number, h: number): ICell[][] {
+export function makeRandomMaze(w: number, h: number): IMaze {
   const width = !isEven(w) ? w : w + 1;
   const height = !isEven(h) ? h : h + 1;
 
@@ -120,5 +120,5 @@ export function makeRandomMaze(w: number, h: number): ICell[][] {
         currentICoords = stack[stack.length - 1];
     }
   }
-  return maze;
+  return { cells: maze, width, height } ;
 }

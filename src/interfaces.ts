@@ -3,11 +3,30 @@ export enum Status {
   HasNotVisited
 }
 
+export interface IPathNode {
+  x: number;
+  y: number;
+  status: string;
+  path: ICoords[];
+}
+
+export interface ISuccessfullPath {
+  path: ICoords[];
+  endCoordinates: ICoords;
+  startCoordinates: ICoords;
+}
+
 export interface ICell {
   tile: string;
   visited: Status;
   x: number;
   y: number;
+}
+
+export interface IMaze {
+  cells: ICell[][];
+  width: number;
+  height: number;
 }
 
 export interface ITile {
