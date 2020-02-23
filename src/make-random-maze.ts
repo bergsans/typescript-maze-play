@@ -23,24 +23,19 @@ function emptyMap(width: number, height: number): ICell[][] {
             tile: 'WALL',
             visited: Status.HasVisited,
             x,
-            y
+            y,
           }
         : {
             tile: 'FLOOR',
             visited: Status.HasNotVisited,
             x,
-            y
-          }
-    )
+            y,
+          },
+    ),
   );
 }
 
-function whichDirectionsArePossible(
-  maze: ICell[][],
-  currentICoords: ICoords,
-  width: number,
-  height: number
-): string[] {
+function whichDirectionsArePossible(maze: ICell[][], currentICoords: ICoords, width: number, height: number): string[] {
   function isValid<Key extends keyof IPossibleMoves>(direction: Key) {
     const thisY = currentICoords.y + POSSIBLE_MOVES[direction].y;
     const thisX = currentICoords.x + POSSIBLE_MOVES[direction].x;
@@ -52,11 +47,7 @@ function whichDirectionsArePossible(
       maze[thisY][thisX].visited !== Status.HasVisited
     );
   }
-  return (
-    Object.keys(POSSIBLE_MOVES).filter(dir =>
-      isValid(dir as keyof IPossibleMoves)
-    ) || []
-  );
+  return Object.keys(POSSIBLE_MOVES).filter(dir => isValid(dir as keyof IPossibleMoves)) || [];
 }
 
 export function makeRandomMaze(w: number, h: number): IMaze {
@@ -79,9 +70,9 @@ export function makeRandomMaze(w: number, h: number): IMaze {
 
     const availableDirections = whichDirectionsArePossible(
       maze,
-        { x: currentICoords.x, y: currentICoords.y },
+      { x: currentICoords.x, y: currentICoords.y },
       width,
-      height
+      height,
     );
 
     // 2.1 If the current Cell has any neighbours which have not been visited
@@ -95,14 +86,14 @@ export function makeRandomMaze(w: number, h: number): IMaze {
 
       // 2.1.3 Remove the wall between the current Cell and the chosen Cell
       const currentPosition: ICoords = {
-        y: currentICoords.y + WALL_RELATIONS[(dir as keyof IPossibleMoves)].y,
-        x: currentICoords.x + WALL_RELATIONS[(dir as keyof IPossibleMoves)].x
+        y: currentICoords.y + WALL_RELATIONS[dir as keyof IPossibleMoves].y,
+        x: currentICoords.x + WALL_RELATIONS[dir as keyof IPossibleMoves].x,
       };
       maze[currentPosition.y][currentPosition.x].tile = 'FLOOR';
 
       // 2.1.4 Make the chosen Cell the current Cell and mark it as visited
-      const thisYFloor = currentICoords.y + POSSIBLE_MOVES[(dir as keyof IPossibleMoves)].y;
-      const thisXFloor = currentICoords.x + POSSIBLE_MOVES[(dir as keyof IPossibleMoves)].x;
+      const thisYFloor = currentICoords.y + POSSIBLE_MOVES[dir as keyof IPossibleMoves].y;
+      const thisXFloor = currentICoords.x + POSSIBLE_MOVES[dir as keyof IPossibleMoves].x;
       currentICoords = maze[thisYFloor][thisXFloor];
 
       if (!(currentICoords.x && currentICoords.y)) {
@@ -117,8 +108,8 @@ export function makeRandomMaze(w: number, h: number): IMaze {
       stack.pop();
 
       // 2.2.2 Make it the current Cell
-        currentICoords = stack[stack.length - 1];
+      currentICoords = stack[stack.length - 1];
     }
   }
-  return { cells: maze, width, height } ;
+  return { cells: maze, width, height };
 }

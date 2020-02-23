@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc ./src/*.ts --outDir ./build && echo \"Project built successfully. Use 'npm run demo'.\"",
+    "build": "tsc && echo \"Project built successfully. Use 'npm run demo'.\"",
     "demo": "node ./build/demo.js"
-     
   },
   "repository": {
     "type": "git",
@@ -21,6 +20,9 @@
   "homepage": "https://github.com/claes-magnus/typescript-maze-play#readme",
   "devDependencies": {
     "@types/node": "^13.7.4",
+    "prettier": "^1.19.1",
+    "tslint": "^6.0.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.8.2"
   }
 }

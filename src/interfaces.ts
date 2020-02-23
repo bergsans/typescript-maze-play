@@ -1,6 +1,6 @@
 export enum Status {
   HasVisited,
-  HasNotVisited
+  HasNotVisited,
 }
 
 export interface IPathNode {
