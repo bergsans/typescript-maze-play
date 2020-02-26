@@ -24,11 +24,11 @@ npm run demo
 ![](./demo-screenshot.png)
 
 
-## Explanation
+## Short explanation
 
 By use of Depth-first Search we shall create a maze generator. I will use TypeScript.
 
-## Helpers
+### helpers
 
 Let's begin by generating an empty 'map' which later will be populated by our maze. Each 'visitable' cell should be surrounded by unvisitable, thus creating a grid.
 
@@ -161,7 +161,7 @@ The randomizer decided we move right. From here we can continue moving to the ri
 As long as an unvisited node is at hand, this continues. If
 not, we go back (we pop the last node in the stack) until we find a node from where we can go to an unvisited node. When we have no node that can be visited pilled in the stack, a maze has emerged.
 
-## Making the Maze
+### Making the Maze
 
 
 We will traverse the maze by 'walking' in different directions. We move from a visitable cell of the maze to another visitable cell. In doing this, we 'jump' an unvisitable cell. As we move the wall between two visitable cells will be ground. From the start, only the point of departure was of type floor. To walk means to connect visitable cells of type floor by removing walls by changing the type to floor.
@@ -317,7 +317,7 @@ returning our maze as well as its width and height.
 }
 ```
 
-## Find a way
+### Find a way
 
 Our function for finding a path in a maze will receive two positions,
 a node containing the x/y for where to start and another node for where to go.
