@@ -28,7 +28,7 @@ npm run demo
 
 By use of Depth-first Search we shall create a maze generator. I will use TypeScript.
 
-### helpers
+### Helpers
 
 Let's begin by generating an empty 'map' which later will be populated by our maze. Each 'visitable' cell should be surrounded by unvisitable, thus creating a grid.
 
